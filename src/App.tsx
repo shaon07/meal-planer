@@ -1,4 +1,3 @@
-import Pokemon from "./components/Pokemon";
 import {
   decrement,
   increment,
@@ -26,8 +25,6 @@ export default function App() {
           Decrement
         </button>
       </div>
-
-      <Pokemon />
     </div>
   );
 }
