@@ -3,6 +3,7 @@ import { useCallback, useMemo, useState } from "react";
 import { DAYS } from "../../../constants";
 import { useRecipeDetails } from "../../../hooks/useRecipeDetails";
 import type { MenuItem, Recipe } from "../../../types";
+import Button from "../../atoms/Button";
 import Select from "../../atoms/Select";
 
 interface RecipeDetailsProps {
@@ -76,6 +77,7 @@ const RecipeDetails = ({ recipe }: RecipeDetailsProps) => {
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Add to Meal Plan
               </label>
+
               <div className="flex gap-2">
                 <Select
                   options={[
@@ -86,14 +88,10 @@ const RecipeDetails = ({ recipe }: RecipeDetailsProps) => {
                   onChange={(day) => setSelectedDay(day)}
                 />
 
-                <button
-                  onClick={handleAddToDay}
-                  disabled={!selectedDay}
-                  className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed transition flex items-center gap-2"
-                >
+                <Button onClick={handleAddToDay} disabled={!selectedDay}>
                   <Plus className="w-4 h-4" />
                   Add
-                </button>
+                </Button>
               </div>
 
               {showSuccess && (
