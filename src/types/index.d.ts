@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 export interface Recipe {
   id: string;
   name: string;
@@ -10,4 +12,9 @@ export interface Recipe {
 
 export interface MealPlan {
   [date: string]: Recipe | null; // e.g., "2025-01-20": Recipe
+}
+
+export interface MenuItem {
+  value: string;
+  label: ReactNode;
 }
