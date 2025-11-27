@@ -4,6 +4,7 @@ import { DAYS } from "../../../constants";
 import { useRecipeDetails } from "../../../hooks/useRecipeDetails";
 import type { MenuItem, Recipe } from "../../../types";
 import Button from "../../atoms/Button";
+import Chip from "../../atoms/Chip";
 import Select from "../../atoms/Select";
 
 interface RecipeDetailsProps {
@@ -65,12 +66,8 @@ const RecipeDetails = ({ recipe }: RecipeDetailsProps) => {
 
           <div className="mb-6">
             <div className="flex items-center gap-2 mb-4">
-              <span className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-medium">
-                {details.strCategory}
-              </span>
-              <span className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-medium">
-                {details.strArea}
-              </span>
+              <Chip type="primary">{details.strCategory}</Chip>
+              <Chip type="secondary">{details.strArea}</Chip>
             </div>
 
             <div className="bg-gray-50 rounded-lg p-4">
