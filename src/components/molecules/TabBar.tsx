@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { memo, useEffect, useState } from "react";
 import type { MenuItem } from "../../types";
 
 interface TabBarProps {
@@ -6,8 +6,13 @@ interface TabBarProps {
   onTabChange: (selectedTab: MenuItem) => void;
 }
 
-export default function TabBar({ options, onTabChange }: TabBarProps) {
+const TabBar = memo(({ options, onTabChange }: TabBarProps) => {
   const [activeTab, setActiveTab] = useState<MenuItem>(options[0]);
+
+  useEffect(() => {
+    onTabChange(activeTab);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="bg-white sticky top-0 z-40">
@@ -33,4 +38,8 @@ export default function TabBar({ options, onTabChange }: TabBarProps) {
       </div>
     </div>
   );
-}
+});
+
+export default TabBar;
+
+TabBar.displayName = "TabBar";

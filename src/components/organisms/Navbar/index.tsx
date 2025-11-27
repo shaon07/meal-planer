@@ -1,20 +1,24 @@
+import { memo, useCallback } from "react";
+import useCommonData from "../../../resources/useCommonData";
+import type { MenuItem } from "../../../types/index.d";
+import { updateQueryParams } from "../../../utils";
 import Logo from "../../atoms/Logo";
 import TabBar from "../../molecules/TabBar";
 
-export default function Navbar() {
+const Navbar = memo(() => {
+  const { headerTabMenus } = useCommonData();
+  const handleTabChange = useCallback((selectedTab: MenuItem) => {
+    updateQueryParams(selectedTab.value);
+  }, []);
+
   return (
     <nav className="bg-neutral-primary w-full border-b border-default">
       <Logo />
-      <TabBar
-        options={[
-          { value: "recipes", label: "Recipes" },
-          { value: "plan", label: "Meal Plan" },
-          { value: "shopping", label: "Shopping List" },
-        ]}
-        onTabChange={(selectedTab) => {
-          console.log("Selected Tab:", selectedTab);
-        }}
-      />
+
+      <TabBar options={headerTabMenus} onTabChange={handleTabChange} />
     </nav>
   );
-}
+});
+
+export default Navbar;
+Navbar.displayName = "Navbar";
