@@ -1,11 +1,12 @@
 import { Plus } from "lucide-react";
-import { useCallback, useMemo, useState } from "react";
+import { memo, useCallback, useMemo, useState } from "react";
 import { DAYS } from "../../../constants";
 import { useRecipeDetails } from "../../../hooks/useRecipeDetails";
 import type { MenuItem, Recipe } from "../../../types";
 import Button from "../../atoms/Button";
 import Chip from "../../atoms/Chip";
 import Select from "../../atoms/Select";
+import Lists from "../../molecules/Lists";
 
 interface RecipeDetailsProps {
   recipe: Recipe;
@@ -104,24 +105,7 @@ const RecipeDetails = ({ recipe }: RecipeDetailsProps) => {
               Ingredients
             </h3>
 
-            <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
-              {ingredients.map((ingredient, index) => (
-                <li
-                  key={index}
-                  className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg"
-                >
-                  <span className="w-2 h-2 bg-blue-600 rounded-full"></span>
-                  <span className="font-medium text-gray-700">
-                    {ingredient.name}
-                  </span>
-                  {ingredient.measure && (
-                    <span className="text-gray-500 ml-auto">
-                      {ingredient.measure}
-                    </span>
-                  )}
-                </li>
-              ))}
-            </ul>
+            <Lists ingredients={ingredients} />
           </div>
 
           <div>
@@ -140,5 +124,5 @@ const RecipeDetails = ({ recipe }: RecipeDetailsProps) => {
   );
 };
 
-export default RecipeDetails;
+export default memo(RecipeDetails);
 RecipeDetails.displayName = "RecipeDetails";

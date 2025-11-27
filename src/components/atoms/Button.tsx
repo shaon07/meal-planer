@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { memo, type ReactNode } from "react";
 
 interface ButtonProps {
   children: ReactNode;
@@ -18,5 +18,5 @@ const Button = ({ onClick, disabled, children }: ButtonProps) => {
   );
 };
 
-export default Button;
+export default memo(Button);
 Button.displayName = "Button";

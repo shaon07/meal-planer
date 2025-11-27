@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { memo, type ReactNode } from "react";
 import { cn } from "../../utils/cn";
 
 interface ChipProps {
@@ -21,5 +21,5 @@ const Chip = ({ children, type = "primary" }: ChipProps) => {
   );
 };
 
-export default Chip;
+export default memo(Chip);
 Chip.displayName = "Chip";
