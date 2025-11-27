@@ -1,3 +1,30 @@
+import {
+  decrement,
+  increment,
+} from "./context/redux/features/counter/counterSlice";
+import { useAppDispatch, useAppSelector } from "./hooks/rtk";
+
 export default function App() {
-  return <div className="text-red-500">App</div>;
+  const count = useAppSelector((state) => state.counter.value);
+  const dispatch = useAppDispatch();
+
+  return (
+    <div>
+      <div>
+        <button
+          aria-label="Increment value"
+          onClick={() => dispatch(increment())}
+        >
+          Increment
+        </button>
+        <span>{count}</span>
+        <button
+          aria-label="Decrement value"
+          onClick={() => dispatch(decrement())}
+        >
+          Decrement
+        </button>
+      </div>
+    </div>
+  );
 }
