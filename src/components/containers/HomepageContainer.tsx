@@ -4,8 +4,10 @@ import type { Recipe } from "../../types";
 import ErrorBox from "../atoms/ErrorBox";
 import LoaderSpinner from "../atoms/LoaderSpinner";
 import RecipeNotFound from "../atoms/RecipeNotFound";
+import Modal from "../molecules/Modal";
 import FilterRecipe from "../organisms/FilterRecipe";
 import RecipeCard from "../organisms/RecipeCard";
+import RecipeDetails from "../organisms/RecipeDetails";
 
 export default function HomepageContainer() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -39,6 +41,16 @@ export default function HomepageContainer() {
           </div>
         )}
       </div>
+
+      {selectedRecipe && (
+        <Modal
+          open={true}
+          title={selectedRecipe?.strMeal}
+          onClose={() => setSelectedRecipe(null)}
+        >
+          <RecipeDetails recipe={selectedRecipe} />
+        </Modal>
+      )}
     </div>
   );
 }

@@ -53,6 +53,11 @@ export interface RecipeDetails extends Recipe {
   strMeasure20?: string;
 }
 
+export interface Ingredient {
+  name: string;
+  measure: string;
+}
+
 export interface MenuItem {
   value: string;
   label: ReactNode;
