@@ -1,3 +1,4 @@
+import { memo } from "react";
 import type { MenuItem } from "../../types";
 
 interface SelectProps {
@@ -6,7 +7,7 @@ interface SelectProps {
   options: MenuItem[];
 }
 
-export default function Select({ value, onChange, options }: SelectProps) {
+const Select = ({ value, onChange, options }: SelectProps) => {
   return (
     <select
       value={value}
@@ -20,4 +21,7 @@ export default function Select({ value, onChange, options }: SelectProps) {
       ))}
     </select>
   );
-}
+};
+
+export default memo(Select);
+Select.displayName = "Select";
