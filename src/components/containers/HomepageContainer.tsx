@@ -4,7 +4,12 @@ export default function HomepageContainer() {
   return (
     <div className="p-4">
       <div>
-        <FilterRecipe onCategoryChange={() => {}} onSearchChange={() => {}} />
+        <FilterRecipe
+          onCategoryChange={() => {}}
+          onSearchChange={(data) => {
+            console.log(data);
+          }}
+        />
       </div>
     </div>
   );

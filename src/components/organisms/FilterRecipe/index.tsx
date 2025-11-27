@@ -1,7 +1,9 @@
 import { Search } from "lucide-react";
-import { memo, useCallback, useState } from "react";
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useGetCategoriesQuery } from "../../../services/recipes.service";
+import type { Category, MenuItem } from "../../../types";
 import Input from "../../atoms/Input";
+import Select from "../../atoms/Select";
 
 interface FilterRecipeProps {
   onSearchChange: (query: string) => void;
@@ -15,13 +17,39 @@ const FilterRecipe = ({
   const [selectedCategory, setSelectedCategory] = useState("all");
   const { data } = useGetCategoriesQuery({});
 
+  const categoryOptions: MenuItem[] = useMemo(
+    () => [
+      { value: "all", label: "All Categories" },
+      ...(data?.categories?.map((c: Category) => ({
+        value: c.strCategory,
+        label: c.strCategory,
+      })) ?? []),
+    ],
+    [data]
+  );
+
+  const searchTimeout = useRef<number | null>(null);
+
   const handleSearchChange = useCallback(
     (value: string) => {
       setSearchQuery(value);
-      onSearchChange(value);
+      if (searchTimeout.current) {
+        clearTimeout(searchTimeout.current);
+      }
+      searchTimeout.current = window.setTimeout(() => {
+        onSearchChange(value);
+      }, 300);
     },
     [onSearchChange]
   );
+
+  useEffect(() => {
+    return () => {
+      if (searchTimeout.current) {
+        clearTimeout(searchTimeout.current);
+      }
+    };
+  }, []);
 
   const handleCategoryChange = useCallback(
     (value: string) => {
@@ -41,18 +69,11 @@ const FilterRecipe = ({
         />
 
         <div className="md:w-64">
-          <select
+          <Select
             value={selectedCategory}
-            onChange={(e) => handleCategoryChange(e.target.value)}
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition bg-white"
-          >
-            <option value="all">All Categories</option>
-            {data?.categories.map((category: any) => (
-              <option key={category.idCategory} value={category.strCategory}>
-                {category.strCategory}
-              </option>
-            ))}
-          </select>
+            onChange={handleCategoryChange}
+            options={categoryOptions}
+          />
         </div>
       </div>
     </div>
