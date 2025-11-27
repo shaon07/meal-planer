@@ -69,3 +69,10 @@ export interface Category {
   strCategoryThumb: string;
   strCategoryDescription: string;
 }
+
+export interface ShoppingListItem {
+  id: string;
+  name: string;
+  measure: string;
+  purchased: boolean;
+}

@@ -2,10 +2,12 @@ import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query";
 import { recipesApi } from "../../services/recipes.service";
 import counterReducer from "./features/counter/counterSlice";
+import mealPlanReducer from "./features/recipe/mealPlanSlice";
 
 export const store = configureStore({
   reducer: {
     counter: counterReducer,
+    mealPlan: mealPlanReducer,
 
     [recipesApi.reducerPath]: recipesApi.reducer,
   },
