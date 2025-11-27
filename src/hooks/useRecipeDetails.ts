@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { useGetRecipeByIdQuery } from "../services/recipes.service";
 import type { Ingredient, RecipeDetails } from "../types";
 
@@ -19,7 +19,7 @@ export const useRecipeDetails = (id: string | null) => {
     [data]
   );
 
-  const getIngredients = (): Ingredient[] => {
+  const getIngredients = useCallback(() => {
     if (!recipe) return [];
 
     const ingredients: Ingredient[] = [];
@@ -35,7 +35,7 @@ export const useRecipeDetails = (id: string | null) => {
       }
     }
     return ingredients;
-  };
+  }, [recipe]);
 
   const errorMessage = error
     ? "message" in error

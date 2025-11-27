@@ -1,5 +1,5 @@
 import { Plus } from "lucide-react";
-import { useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { DAYS } from "../../../constants";
 import { useRecipeDetails } from "../../../hooks/useRecipeDetails";
 import type { MenuItem, Recipe } from "../../../types";
@@ -19,19 +19,23 @@ const RecipeDetails = ({ recipe }: RecipeDetailsProps) => {
   const [selectedDay, setSelectedDay] = useState("");
   const [showSuccess, setShowSuccess] = useState(false);
 
-  const handleAddToDay = () => {
+  const handleAddToDay = useCallback(() => {
     if (selectedDay) {
       setShowSuccess(true);
       setTimeout(() => setShowSuccess(false), 2000);
     }
-  };
+  }, [selectedDay]);
 
-  const daysOptions: MenuItem[] = DAYS.map((day) => {
-    return {
-      value: day,
-      label: day,
-    };
-  });
+  const daysOptions: MenuItem[] = useMemo(
+    () =>
+      DAYS.map((day) => {
+        return {
+          value: day,
+          label: day,
+        };
+      }),
+    []
+  );
 
   return (
     <div>
@@ -104,6 +108,7 @@ const RecipeDetails = ({ recipe }: RecipeDetailsProps) => {
             <h3 className="text-xl font-bold text-gray-800 mb-4">
               Ingredients
             </h3>
+
             <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
               {ingredients.map((ingredient, index) => (
                 <li
