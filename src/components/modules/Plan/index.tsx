@@ -1,7 +1,8 @@
 import { memo } from "react";
+import WeeklyPlans from "../../organisms/WeeklyPlans";
 
 const PlanModule = () => {
-  return <div>PlanModule</div>;
+  return <WeeklyPlans />;
 };
 
 export default memo(PlanModule);

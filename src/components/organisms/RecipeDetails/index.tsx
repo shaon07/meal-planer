@@ -1,6 +1,7 @@
 import { Plus } from "lucide-react";
 import { memo, useCallback, useMemo, useState } from "react";
 import { DAYS } from "../../../constants";
+import { useMealPlan } from "../../../hooks/useMealPlan";
 import { useRecipeDetails } from "../../../hooks/useRecipeDetails";
 import type { MenuItem, Recipe } from "../../../types";
 import Button from "../../atoms/Button";
@@ -19,15 +20,17 @@ const RecipeDetails = ({ recipe }: RecipeDetailsProps) => {
     error,
   } = useRecipeDetails(recipe.idMeal);
 
+  const { addRecipe } = useMealPlan();
   const [selectedDay, setSelectedDay] = useState("");
   const [showSuccess, setShowSuccess] = useState(false);
 
   const handleAddToDay = useCallback(() => {
     if (selectedDay) {
+      addRecipe(selectedDay, recipe);
       setShowSuccess(true);
       setTimeout(() => setShowSuccess(false), 2000);
     }
-  }, [selectedDay]);
+  }, [selectedDay, addRecipe, recipe]);
 
   const daysOptions: MenuItem[] = useMemo(
     () =>
