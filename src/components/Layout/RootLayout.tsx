@@ -7,7 +7,7 @@ interface RootLayoutProps {
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <div>
+    <div className="min-h-screen bg-linear-to-br from-blue-50 via-white to-green-50">
       <Navbar />
       {children}
     </div>
