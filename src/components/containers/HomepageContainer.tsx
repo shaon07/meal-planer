@@ -8,7 +8,6 @@ export default function HomepageContainer() {
   const { params } = useQueryParams();
 
   const render = useCallback((tab: string) => {
-    console.log("tab", tab);
     switch (tab) {
       case "plan":
         return <PlanModule />;
