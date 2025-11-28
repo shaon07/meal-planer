@@ -22,7 +22,7 @@ const Navbar = memo(() => {
   );
 
   return (
-    <nav className="bg-neutral-primary w-full border-b border-default">
+    <nav className="bg-neutral-primary w-full border-b border-gray-200">
       <Logo />
 
       <TabBar
