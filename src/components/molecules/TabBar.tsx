@@ -19,7 +19,7 @@ const TabBar = memo(({ value, options, onTabChange }: TabBarProps) => {
 
   return (
     <div className="bg-white">
-      <div className="max-w-7xl mx-auto px-2 md:px-4">
+      <div className="mx-auto px-2 md:px-4">
         <div className="flex gap-1">
           {options.map((option) => (
             <button
