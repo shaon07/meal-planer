@@ -2,12 +2,15 @@ import { memo, useEffect, useState } from "react";
 import type { MenuItem } from "../../types";
 
 interface TabBarProps {
+  value: string;
   options: MenuItem[];
   onTabChange: (selectedTab: MenuItem) => void;
 }
 
-const TabBar = memo(({ options, onTabChange }: TabBarProps) => {
-  const [activeTab, setActiveTab] = useState<MenuItem>(options[0]);
+const TabBar = memo(({ value, options, onTabChange }: TabBarProps) => {
+  const [activeTab, setActiveTab] = useState<MenuItem>(
+    options.find((option) => option.value === value) || options[0]
+  );
 
   useEffect(() => {
     onTabChange(activeTab);

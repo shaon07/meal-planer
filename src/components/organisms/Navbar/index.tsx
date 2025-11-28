@@ -1,21 +1,35 @@
-import { memo, useCallback } from "react";
+import { memo, useCallback, useMemo } from "react";
+import { useQueryParams } from "../../../hooks/useQueryParams";
 import useCommonData from "../../../resources/useCommonData";
 import type { MenuItem } from "../../../types/index.d";
-import { updateQueryParams } from "../../../utils";
 import Logo from "../../atoms/Logo";
 import TabBar from "../../molecules/TabBar";
 
 const Navbar = memo(() => {
   const { headerTabMenus } = useCommonData();
-  const handleTabChange = useCallback((selectedTab: MenuItem) => {
-    updateQueryParams(selectedTab.value);
-  }, []);
+  const { params, setParam } = useQueryParams();
+
+  const handleTabChange = useCallback(
+    (selectedTab: MenuItem) => {
+      setParam("tab", selectedTab.value);
+    },
+    [setParam]
+  );
+
+  const currentTabValue = useMemo(
+    () => params.tab || headerTabMenus[0].value,
+    [params.tab, headerTabMenus]
+  );
 
   return (
-    <nav className="bg-neutral-primary w-full border-b border-default">
+    <nav className="bg-neutral-primary w-full border-b border-gray-200">
       <Logo />
 
-      <TabBar options={headerTabMenus} onTabChange={handleTabChange} />
+      <TabBar
+        value={currentTabValue}
+        options={headerTabMenus}
+        onTabChange={handleTabChange}
+      />
     </nav>
   );
 });

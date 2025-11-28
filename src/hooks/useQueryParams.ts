@@ -1,14 +1,16 @@
 import { useEffect, useMemo, useState } from "react";
+import { getQueryParams, updateQueryParams } from "../utils";
+
+const initialQueryString =
+  typeof window !== "undefined" ? window.location.search : "";
 
 export const useQueryParams = () => {
-  const [queryString, setQueryString] = useState("");
+  const [queryString, setQueryString] = useState(initialQueryString);
 
   useEffect(() => {
     const update = () => {
       setQueryString(window.location.search);
     };
-
-    update();
 
     window.addEventListener("popstate", update);
 
@@ -29,16 +31,16 @@ export const useQueryParams = () => {
     };
   }, []);
 
-  const params = useMemo(() => {
-    const map: Record<string, string> = {};
-    const sp = new URLSearchParams(queryString);
-    sp.forEach((v, k) => (map[k] = v));
-    return map;
-  }, [queryString]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const params = useMemo(() => getQueryParams(), [queryString]);
 
   const getParam = (key: string, fallback?: string) => {
     return params[key] ?? fallback;
   };
 
-  return { params, getParam };
+  const setParam = (key: string, value: string) => {
+    updateQueryParams(key, value);
+  };
+
+  return { params, getParam, setParam };
 };
