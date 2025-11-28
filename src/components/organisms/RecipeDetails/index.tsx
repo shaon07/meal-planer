@@ -61,7 +61,7 @@ const RecipeDetails = ({ recipe }: RecipeDetailsProps) => {
       )}
 
       {details && !loading && (
-        <div className="p-6">
+        <div className="p-1 md:p-6">
           <img
             src={details.strMealThumb}
             alt={details.strMeal}
@@ -79,7 +79,7 @@ const RecipeDetails = ({ recipe }: RecipeDetailsProps) => {
                 Add to Meal Plan
               </label>
 
-              <div className="flex gap-2">
+              <div className="flex flex-col md:flex-row gap-2">
                 <Select
                   options={[
                     { value: "", label: "Select a day..." },

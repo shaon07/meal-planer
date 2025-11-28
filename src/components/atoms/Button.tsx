@@ -19,7 +19,7 @@ const Button = ({
       onClick={onClick}
       disabled={disabled}
       className={`${cn(
-        "px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed transition flex items-center gap-2 cursor-pointer",
+        "px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed transition flex items-center gap-2 cursor-pointer w-full justify-center",
         className
       )}`}
     >

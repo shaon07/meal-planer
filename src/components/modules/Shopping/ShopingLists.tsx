@@ -35,18 +35,20 @@ const ShopingLists = () => {
         </div>
       ) : (
         <>
-          <div className="flex items-center justify-between mb-4 text-sm">
+          <div className="flex flex-col md:flex-row gap-2 items-center justify-between mb-4 text-sm">
             <p className="text-gray-600">
               {purchasedCount} of {shoppingList.length} items purchased
             </p>
             {purchasedCount > 0 && (
-              <Button
-                onClick={clearCompleted}
-                className="text-red-600 hover:text-red-700 flex bg-transparent hover:bg-gray-200 items-center gap-1 font-medium"
-              >
-                <Trash2 className="w-4 h-4" />
-                Clear Completed
-              </Button>
+              <div>
+                <Button
+                  onClick={clearCompleted}
+                  className="text-red-600 hover:text-red-700 flex bg-transparent hover:bg-gray-200 items-center gap-1 font-medium"
+                >
+                  <Trash2 className="w-4 h-4" />
+                  Clear Completed
+                </Button>
+              </div>
             )}
           </div>
 

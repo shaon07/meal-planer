@@ -15,14 +15,19 @@ const ShoppingModule = () => {
 
   return (
     <div className="bg-white rounded-lg shadow-md p-6">
-      <div className="flex items-center justify-between mb-6">
-        <Typography prefix={<ShoppingCart className="w-6 h-6 text-blue-600" />}>
+      <div className="flex flex-col md:flex-row gap-2 items-center justify-between mb-6">
+        <Typography
+          className="w-full flex-1"
+          prefix={<ShoppingCart className="w-6 h-6 text-blue-600" />}
+        >
           Shopping List
         </Typography>
 
-        <Button onClick={generateShoppingList} disabled={!hasPlan}>
-          {generatingList ? "Generating..." : "Generate List"}
-        </Button>
+        <div className="w-full md:w-max">
+          <Button onClick={generateShoppingList} disabled={!hasPlan}>
+            {generatingList ? "Generating..." : "Generate List"}
+          </Button>
+        </div>
       </div>
 
       <ShopingLists />
