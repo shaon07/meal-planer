@@ -2,11 +2,12 @@ import { memo, type ChangeEvent, type ReactNode } from "react";
 
 interface InputProps {
   value: string;
+  type?: "text" | "password" | "email" | "number";
   onChange: (e: string) => void;
   prefixIcon?: ReactNode;
 }
 
-const Input = ({ value, onChange, prefixIcon }: InputProps) => {
+const Input = ({ value, type = "text", onChange, prefixIcon }: InputProps) => {
   return (
     <div className="flex-1 relative">
       <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5">
@@ -14,7 +15,7 @@ const Input = ({ value, onChange, prefixIcon }: InputProps) => {
       </span>
 
       <input
-        type="text"
+        type={type}
         placeholder="Search recipes..."
         value={value}
         onChange={(e: ChangeEvent<HTMLInputElement>) =>

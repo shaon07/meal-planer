@@ -1,7 +1,7 @@
-import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../context/redux/store";
 
+import { useCallback } from "react";
 import {
   addRecipeToDay,
   clearPurchasedItems,
@@ -9,6 +9,7 @@ import {
   setShoppingList,
   toggleItemPurchased,
 } from "../context/redux/features/recipe/mealPlanSlice";
+import { useLazyGetRecipeByIdQuery } from "../services/recipes.service";
 import type { Recipe, RecipeDetails, ShoppingListItem } from "../types";
 
 export const useMealPlan = () => {
@@ -16,7 +17,8 @@ export const useMealPlan = () => {
   const { plan, shoppingList } = useSelector(
     (state: RootState) => state.mealPlan
   );
-  const [generatingList, setGeneratingList] = useState(false);
+  const [getRecipeById, { isFetching: generatingList }] =
+    useLazyGetRecipeByIdQuery();
 
   const addRecipe = (day: string, recipe: Recipe) => {
     dispatch(addRecipeToDay({ day, recipe }));
@@ -26,8 +28,7 @@ export const useMealPlan = () => {
     dispatch(removeRecipeFromDay({ day, recipeId }));
   };
 
-  const generateShoppingList = async () => {
-    setGeneratingList(true);
+  const generateShoppingList = useCallback(async () => {
     try {
       const allRecipeIds = Object.values(plan)
         .flat()
@@ -36,8 +37,10 @@ export const useMealPlan = () => {
       const uniqueRecipeIds = [...new Set(allRecipeIds)];
 
       const recipeDetailsPromises = uniqueRecipeIds.map((id) =>
-        fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`)
-          .then((res) => res.json())
+        getRecipeById({
+          i: id,
+        })
+          .unwrap()
           .then((data) => data.meals[0] as RecipeDetails)
       );
 
@@ -84,10 +87,8 @@ export const useMealPlan = () => {
       dispatch(setShoppingList(shoppingItems));
     } catch (error) {
       console.error("Failed to generate shopping list:", error);
-    } finally {
-      setGeneratingList(false);
     }
-  };
+  }, [plan, getRecipeById, dispatch]);
 
   const togglePurchased = (itemId: string) => {
     dispatch(toggleItemPurchased(itemId));
